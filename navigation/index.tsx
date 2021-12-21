@@ -3,8 +3,6 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   NavigationContainer,
   DefaultTheme,
@@ -14,16 +12,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 
-import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import DashboardScreen from "../screens/Dashboard/DashboardScreen";
-import {
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
-} from "../types";
+import { RootStackParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import LoginScreen from "../screens/LoginScreen";
 
