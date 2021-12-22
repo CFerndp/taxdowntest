@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
 import DashboardScreen from "../screens/Dashboard/DashboardScreen";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "./types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import LoginScreen from "../screens/Login/LoginScreen";
 
