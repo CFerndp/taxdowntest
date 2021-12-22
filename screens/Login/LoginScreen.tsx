@@ -1,23 +1,17 @@
-import AppLoading from "expo-app-loading";
-import { useAssets } from "expo-asset";
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  ImageSourcePropType,
-  StyleSheet,
-  View,
-} from "react-native";
-import { Button, CheckBox, Image, Input, Text } from "react-native-elements";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { Button, CheckBox, Image, Input } from "react-native-elements";
 import logo from "../../assets/images/logo.png";
-import { StorageKeys } from "../../constants/StorageKeys";
 
-import { RootTabScreenProps } from "../../types";
+import { StorageKeys } from "../../constants/StorageKeys";
+import { RootStackScreenProps } from "../../navigation/types";
+
 import { onCheckChange, onTextChange } from "../../utils/handlers";
 import { getData, storeData } from "../../utils/storage";
 
 export default function LoginScreen({
   navigation,
-}: RootTabScreenProps<"Login">) {
+}: RootStackScreenProps<"Login">) {
   const [user, setUser] = useState("");
   const [pass, setPassword] = useState("");
   const [remember, setRemember] = useState(false);

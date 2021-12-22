@@ -1,72 +1,72 @@
-import * as React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { Tab, Text, TabView, Button } from "react-native-elements";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Tax } from "../../types/types";
 
-import { FontAwesome } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import mockedTaxes from "./mockRequest.json";
+import ListTaxes from "./partials/ListTaxes";
 
-import { RootTabParamList, RootTabScreenProps } from "../../types";
-import useColorScheme from "../../hooks/useColorScheme";
-import Colors from "../../constants/Colors";
-import TabOneScreen from "./TabOneScreen";
-import TabTwoScreen from "./TabTwoScreen";
+const Dashboard: React.FC = () => {
+  const [index, setIndex] = useState(0);
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
-export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+  const activeTaxes: Tax[] = mockedTaxes.taxes.filter((tax) => tax.active);
+  const inactiveTaxes: Tax[] = mockedTaxes.taxes.filter((tax) => !tax.active);
 
   return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}
-    >
-      <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </BottomTab.Navigator>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.scrollView}>
+        <Tab
+          value={index}
+          onChange={(e) => setIndex(e)}
+          indicatorStyle={{
+            backgroundColor: "white",
+            height: 3,
+          }}
+          variant="primary"
+        >
+          <Tab.Item
+            title="Activate"
+            titleStyle={{ fontSize: 12 }}
+            icon={{ name: "eye-outline", type: "ionicon", color: "white" }}
+          />
+          <Tab.Item
+            title="Inactivate"
+            titleStyle={{ fontSize: 12 }}
+            icon={{ name: "eye-off-outline", type: "ionicon", color: "white" }}
+          />
+        </Tab>
+        <TabView value={index} onChange={setIndex} animationType="spring">
+          <TabView.Item style={styles.tabviewItem}>
+            <ListTaxes taxes={activeTaxes} />
+          </TabView.Item>
+          <TabView.Item style={styles.tabviewItem}>
+            <ListTaxes taxes={inactiveTaxes} />
+          </TabView.Item>
+        </TabView>
+      </View>
+      <Button title={"Share this app :D"} />
+    </SafeAreaView>
   );
-}
+};
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-}
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+  },
+  scrollView: {
+    flex: 2,
+  },
+  share: {
+    flex: 1,
+    height: 50,
+  },
+  tabviewItem: {
+    width: "100%",
+    height: "100%",
+  },
+});
+
+export default Dashboard;
