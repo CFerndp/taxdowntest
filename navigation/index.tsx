@@ -17,7 +17,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import DashboardScreen from "../screens/Dashboard/DashboardScreen";
 import { RootStackParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import LoginScreen from "../screens/LoginScreen";
+import LoginScreen from "../screens/Login/LoginScreen";
 
 export default function Navigation({
   colorScheme,

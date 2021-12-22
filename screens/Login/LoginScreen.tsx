@@ -1,16 +1,18 @@
-import React, { Dispatch, useEffect, useState } from "react";
+import { useAssets } from "expo-asset";
+import React, { useEffect, useState } from "react";
 import {
-  NativeSyntheticEvent,
+  ActivityIndicator,
+  ImageSourcePropType,
   StyleSheet,
-  TextInputChangeEventData,
   View,
 } from "react-native";
-import { Button, CheckBox, Input, Text } from "react-native-elements";
-import { StorageKeys } from "../constants/StorageKeys";
+import { Button, CheckBox, Image, Input, Text } from "react-native-elements";
+import logo from "../../assets/images/logo.png";
+import { StorageKeys } from "../../constants/StorageKeys";
 
-import { RootTabScreenProps } from "../types";
-import { onCheckChange, onTextChange } from "../utils/handlers";
-import { getData, storeData } from "../utils/storage";
+import { RootTabScreenProps } from "../../types";
+import { onCheckChange, onTextChange } from "../../utils/handlers";
+import { getData, storeData } from "../../utils/storage";
 
 export default function LoginScreen({
   navigation,
@@ -46,7 +48,11 @@ export default function LoginScreen({
   };
   return (
     <View style={styles.container}>
-      <Text h1>TaxDown</Text>
+      <Image
+        style={styles.logo}
+        source={logo}
+        PlaceholderContent={<ActivityIndicator />}
+      />
       <View style={styles.inputContainer}>
         <Input
           placeholder="Usuario"
@@ -91,5 +97,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "stretch",
     justifyContent: "flex-start",
+  },
+  logo: {
+    width: 350,
+    height: 50,
   },
 });
