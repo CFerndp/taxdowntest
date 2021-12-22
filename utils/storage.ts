@@ -16,8 +16,6 @@ export const getData: <T>(key: string) => Promise<T | null> = async <T>(
   try {
     const value = await AsyncStorage.getItem(key);
 
-    console.log(key, value);
-
     if (value !== null) {
       const object = JSON.parse(value);
 

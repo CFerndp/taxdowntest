@@ -1,3 +1,4 @@
+import AppLoading from "expo-app-loading";
 import { useAssets } from "expo-asset";
 import React, { useEffect, useState } from "react";
 import {
@@ -21,19 +22,17 @@ export default function LoginScreen({
   const [pass, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const doAsynctask = async () => {
-      console.log("pap2");
-
       const userStored = await getData<string>(StorageKeys.USERNAME);
-      const passStored = await getData<string>(StorageKeys.PASSWORD);
+      const passStored = await getData<string>(StorageKeys.PASSWORD); //TODO: Cypher it
 
       if (userStored && passStored && userStored !== "") {
         setUser(userStored);
         setPassword(passStored);
         setRemember(true);
-
-        console.log(userStored);
       }
     };
 
@@ -41,10 +40,18 @@ export default function LoginScreen({
   }, []);
 
   const onLogin = () => {
+    setLoading(true);
+
     if (remember) {
       storeData(StorageKeys.USERNAME, user);
       storeData(StorageKeys.PASSWORD, pass);
     }
+
+    //Mock login request
+    setTimeout(() => {
+      setLoading(false);
+      navigation.push("Dashboard");
+    }, 1000);
   };
   return (
     <View style={styles.container}>
@@ -74,6 +81,7 @@ export default function LoginScreen({
         />
         <Button
           title="Acceder"
+          loading={loading}
           onPress={onLogin}
           disabled={user === "" || pass === ""}
         />
