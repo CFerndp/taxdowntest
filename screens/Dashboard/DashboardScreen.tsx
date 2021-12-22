@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, Share, StyleSheet, View } from "react-native";
 import { Tab, Text, TabView, Button } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as Sharing from "expo-sharing";
+
 import { Tax } from "../../types/types";
 
 import mockedTaxes from "./mockRequest.json";
@@ -12,6 +14,16 @@ const Dashboard: React.FC = () => {
 
   const activeTaxes: Tax[] = mockedTaxes.taxes.filter((tax) => tax.active);
   const inactiveTaxes: Tax[] = mockedTaxes.taxes.filter((tax) => !tax.active);
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: "TaxDown!!!!",
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,7 +57,7 @@ const Dashboard: React.FC = () => {
           </TabView.Item>
         </TabView>
       </View>
-      <Button title={"Share this app :D"} />
+      <Button title={"Share this app :D"} onPress={onShare} />
     </SafeAreaView>
   );
 };
